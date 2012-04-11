@@ -1,0 +1,6 @@
+//this mixin will add the hand/pointer cursor to any element that
+//will be treated as a link/clickable
+@mixin handCursor {
+	cursor: hand;
+	cursor: pointer;
+}

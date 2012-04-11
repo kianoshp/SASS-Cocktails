@@ -9,5 +9,5 @@ Sass 3.1+
 
 Credits
 -------
-
+Some of the SASS mixins have been borrowed from [thoughtbot/bourbon](http://thoughtbot.com/bourbon/), which I have given credit where it is due...Thanks!!
 Tweet all inquiries to [@kianoshp](http://twitter.com/kianoshp).

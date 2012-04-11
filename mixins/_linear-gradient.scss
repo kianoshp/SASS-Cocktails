@@ -1,0 +1,55 @@
+//this mixin will create a linear-gradient. The parameters passed here are:
+//$pos: position of the gradient which defaults to top but can take bottom, left, or right
+//$G1-G10: these allow for 10 color stops values, color and length/percentage
+//$fallback: this is the fallback color that will be used for older browsers, if this parameter
+//is not provided then the first color stop is used. 
+@mixin linear-gradient($pos, $G1, $G2: false,
+                       $G3: false, $G4: false,
+                       $G5: false, $G6: false,
+                       $G7: false, $G8: false,
+                       $G9: false, $G10: false,
+                       $fallback: false) {
+                       
+  // Detect what type of value exists in $pos
+  $pos-type: type-of(nth($pos, 1));
+
+  // If $pos is missing from mixin, reassign vars and add default position
+  @if ($pos-type == color) or (nth($pos, 1) == "transparent")  {
+    $G10: $G9; $G9: $G8; $G8: $G7; $G7: $G6; $G6: $G5;
+     $G5: $G4; $G4: $G3; $G3: $G2; $G2: $G1; $G1: $pos;
+    $pos: top; // Default position
+	}
+	
+  $full: compact($G1, $G2, $G3, $G4, $G5, $G6, $G7, $G8, $G9, $G10);
+	
+  // Set $G1 as the default fallback color
+  $fallback-color: nth($G1, 1);
+
+  // If $fallback is a color use that color as the fallback color
+  @if type-of($fallback) == color {
+    $fallback-color: $fallback;
+  }
+
+  background: $fallback-color;
+  background: deprecated-webkit-gradient(linear, $full); // Safari <= 5.0
+  background:  -webkit-linear-gradient($pos, $full); // Safari 5.1+, Chrome
+  background:     -moz-linear-gradient($pos, $full);
+  background:      -ms-linear-gradient($pos, $full);
+  background:       -o-linear-gradient($pos, $full);
+  background: unquote("linear-gradient(#{$pos}, #{$full})"); 
+}
+
+//NOTE: this mixin relies heavily on the compact function which is not included in the
+//SASS installation. Please add the following to the custom functions of SASS.
+//	  # Returns a new list after removing any non-true values
+//	  def compact(*args)
+//		sep = :comma
+//		if args.size == 1 && args.first.is_a?(Sass::Script::List)
+//		  list = args.first
+//		  args = list.value
+//		  sep = list.separator
+//		end
+//		Sass::Script::List.new(args.reject{|a| !a.to_bool}, sep)
+//	  end
+//
+//I should also give credit here to https://github.com/thoughtbot/bourbon for this code.

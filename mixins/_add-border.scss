@@ -1,0 +1,9 @@
+//This mixin will add border at given position. If no position is given (or position is all)
+//then the border will be applied to all sides
+@mixin add-border($border-position: all, $border-size: 1px, $border-pattern: solid, $border-color: #000) {
+	@if $border-position == 'all' {
+		border: $border-size $border-pattern $border-color;
+	} @else {
+		border-#{$border-position}: $border-size $border-pattern $border-color;
+	}
+}
