@@ -1,0 +1,34 @@
+// Shorthand mixin. Supports multiple parentheses-deliminated values for each variable.
+// Example: @include transition (all, 2.0s, ease-in-out);
+//          @include transition ((opacity, width), (1.0s, 2.0s), ease-in, (0, 2s));
+
+@mixin transition ($prop-1: all 0.15s ease-out 0,
+  $prop-2: false, $prop-3: false,
+  $prop-4: false, $prop-5: false,
+  $prop-6: false, $prop-7: false,
+  $prop-8: false, $prop-9: false)
+  {
+    $full: compact($prop-1, $prop-2, $prop-3, $prop-4, $prop-5,
+                   $prop-6, $prop-7, $prop-8, $prop-9);
+
+  -webkit-transition: $full;
+     -moz-transition: $full;
+      -ms-transition: $full;
+       -o-transition: $full;
+          transition: $full;
+}
+
+//NOTE: this mixin relies heavily on the compact function which is not included in the
+//SASS installation. Please add the following to the custom functions of SASS.
+//	  # Returns a new list after removing any non-true values
+//	  def compact(*args)
+//		sep = :comma
+//		if args.size == 1 && args.first.is_a?(Sass::Script::List)
+//		  list = args.first
+//		  args = list.value
+//		  sep = list.separator
+//		end
+//		Sass::Script::List.new(args.reject{|a| !a.to_bool}, sep)
+//	  end
+//
+//I should also give credit here to https://github.com/thoughtbot/bourbon for this code.
