@@ -3,7 +3,7 @@
 //$G1-G10: these allow for 10 color stops values, color and length/percentage
 //$fallback: this is the fallback color that will be used for older browsers, if this parameter
 //is not provided then the first color stop is used. 
-@mixin linear-gradient($pos, $G1, $G2: false,
+@mixin add-linear-gradient($pos, $G1, $G2: false,
                        $G3: false, $G4: false,
                        $G5: false, $G6: false,
                        $G7: false, $G8: false,

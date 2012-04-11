@@ -1,6 +1,6 @@
 //this mixin will set the box-shadow values. It will also allow for the flexibility of
 //doing an inset shadow.
-@mixin box-shadow ($hOffset: 2px, $vOffset: 2px, $blur: 3px, $spread: 1px, $color: #ccc, $isInset: false) {
+@mixin add-box-shadow ($hOffset: 2px, $vOffset: 2px, $blur: 3px, $spread: 1px, $color: #ccc, $isInset: false) {
 	@if $isInset {
 		-moz-box-shadow: inset $hOffset $vOffset $blur $spread $color;
 		-webkit-box-shadow: inset $hOffset $vOffset $blur $spread $color;
