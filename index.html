@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Sass-cocktails by kianoshp</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Sass-cocktails</h1>
+        <h2>Sass Mixins and Functions</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/kianoshp/SASS-Cocktails/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/kianoshp/SASS-Cocktails/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/kianoshp/SASS-Cocktails" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>Mixins</h3>
+
+<p>Mixins allow for re-use of chunks of CSS. Below is an example of a mixin:</p>
+
+<pre><code>@mixin add-linear-gradient($pos, $G1, $G2: false,
+                       $G3: false, $G4: false,
+                       $G5: false, $G6: false,
+                       $G7: false, $G8: false,
+                       $G9: false, $G10: false,
+                       $fallback: false) {
+
+  // Detect what type of value exists in $pos
+  $pos-type: type-of(nth($pos, 1));
+
+  // If $pos is missing from mixin, reassign vars and add default position
+  @if ($pos-type == color) or (nth($pos, 1) == "transparent")  {
+    $G10: $G9; $G9: $G8; $G8: $G7; $G7: $G6; $G6: $G5;
+     $G5: $G4; $G4: $G3; $G3: $G2; $G2: $G1; $G1: $pos;
+    $pos: top; // Default position
+    }
+
+  $full: compact($G1, $G2, $G3, $G4, $G5, $G6, $G7, $G8, $G9, $G10);
+
+  // Set $G1 as the default fallback color
+  $fallback-color: nth($G1, 1);
+
+  // If $fallback is a color use that color as the fallback color
+  @if type-of($fallback) == color {
+    $fallback-color: $fallback;
+  }
+
+  background: $fallback-color;
+  background: deprecated-webkit-gradient(linear, $full); // Safari &lt;= 5.0
+  background:  -webkit-linear-gradient($pos, $full); // Safari 5.1+, Chrome
+  background:     -moz-linear-gradient($pos, $full);
+  background:      -ms-linear-gradient($pos, $full);
+  background:       -o-linear-gradient($pos, $full);
+  background: unquote("linear-gradient(#{$pos}, #{$full})"); 
+}
+</code></pre>
+
+<h3>Functions</h3>
+
+<p>Functions are a collection of logic that will be processed and return the desired value. The following is an example of a function:</p>
+
+<pre><code>$defaultBrowserSize: 16;
+@function responsiveFontSize($fontSize: $defaultBrowserSize, $isIE: false) {
+    @if $isIE {
+        @return (($fontSize/$defaultBrowserSize) - 0.02) + em;
+    } @else {
+        @return ($fontSize/$defaultBrowserSize) + em;
+    }
+}
+
+
+@function rfs($fontSize: $defaultBrowserSize, $isIE: false) {
+    @return responsiveFontSize($fontSize, $isIE);
+}
+</code></pre>
+
+<h3>Custom functions</h3>
+
+<p>Any function that is created can be added and declared in Ruby compiler. To add custom functions <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#defining_custom_sass_functions">click here</a>. In most of the mixins and functions I have used the 'compact' function. Declare the following as a custom function:</p>
+
+<pre><code>      # Returns a new list after removing any non-true values
+      def compact(*args)
+        sep = :comma
+        if args.size == 1 &amp;&amp; args.first.is_a?(Sass::Script::List)
+          list = args.first
+          args = list.value
+          sep = list.separator
+        end
+        Sass::Script::List.new(args.reject{|a| !a.to_bool}, sep)
+      end
+</code></pre>
+
+<h3>Authors and Contributors</h3>
+
+<p>I have been taking advantage of 'Thoughtbot' (<a href="https://github.com/thoughtbot" class="user-mention">@thoughtbot</a>) <a href="https://github.com/thoughtbot/bourbon">'Bourbon'</a> project on some mixins. Thanks guys!!</p>
+
+<h3>Support or Contact</h3>
+
+<p>If you have any questions, feel free to direct message me on twitter <a href="http://twitter.com/kianoshp">kianoshp</a></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
